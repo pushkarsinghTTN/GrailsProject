@@ -85,7 +85,6 @@
                                                 <option value="${enumeration.Visibility.PRIVATE}">Private</option>
                                                 <option value="${enumeration.Visibility.PUBLIC}">Public</option>
                                             </select>
-
                                         </div>
                                     </g:if>
                                 </g:if>
