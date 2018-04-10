@@ -38,4 +38,17 @@ class SubscriptionService {
             return true
         }
     }
+
+    def changeSeriousness(Map subscriptionData){
+        Subscription subscription = Subscription.findById(subscriptionData.id)
+        subscription.seriousness= subscriptionData.seriousness
+        if(subscription.save(flush:true)){
+            log.info("Seriousness Changed : $subscription")
+            return true
+        }else{
+            log.error("Unable to Change Seriousness : $subscription")
+            subscription.errors.allErrors.each {println it}
+            return false
+        }
+    }
 }

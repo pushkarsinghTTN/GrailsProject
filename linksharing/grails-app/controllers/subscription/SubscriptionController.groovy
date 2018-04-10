@@ -45,4 +45,15 @@ class SubscriptionController {
             render("NO SUCH SUBSCRIPTION IN OUR DATABASE")
         }
     }
+
+    def changeSeriousness(){
+        println "SubscriptionController.changeSeriousness"
+        println "data ::" + params
+        if(subscriptionService.changeSeriousness(params)){
+            flash.message = "Updated"
+        }else{
+            flash.error = "Unable to Update"
+        }
+        redirect(controller: 'user', action: 'editProfile')
+    }
 }

@@ -109,25 +109,16 @@
                                                       style="margin-left: 10px;">
                                                 </span>
 
-                                                <g:form controller="subscription" action="update" method="post">
-                                                %{--<select class="pull-right" name="updatedSeriousness" name="subscriptionSeriousness" id="">--}%
-                                                %{--<option class="placeholder" selected disabled--}%
-                                                %{--value="">${enumeration.Seriousness.SERIOUS}</option>--}%
-                                                %{--<option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>--}%
-                                                %{--<option value="${enumeration.Seriousness.SERIOUS}">Serious</option>--}%
-                                                %{--<option value="${enumeration.Seriousness.CASUAL}">Casual</option>--}%
-                                                %{--</select>--}%
-
-                                                    <div>
-                                                        <select class="pull-right" name="topicVisibility"
-                                                                id="topic_Visibility" onchange="changeVisibility(${topic.topicId},this.value)">
-                                                            <option class="placeholder" selected disabled
-                                                                    value="">${topic.topicVisibility}</option>
-                                                            <option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>
-                                                            <option value="${enumeration.Visibility.PUBLIC}">PUBLIC</option>
-                                                        </select>
-                                                    </div>
-                                                </g:form>
+                                                <div>
+                                                    <select class="pull-right" name="topicVisibility"
+                                                            id="topic_Visibility"
+                                                            onchange="changeVisibility(${topic.topicId}, this.value)">
+                                                        <option class="placeholder" selected disabled
+                                                                value="">${topic.topicVisibility}</option>
+                                                        <option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>
+                                                        <option value="${enumeration.Visibility.PUBLIC}">PUBLIC</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -299,7 +290,7 @@
 
 
 <script>
-    function changeVisibility(topicId,value) {
+    function changeVisibility(topicId, value) {
         console.log("inside change")
         console.log("id is : ", topicId)
         console.log("value is : ", value)
@@ -308,10 +299,10 @@
             data: {'id': topicId, 'visibility': value},
             url: '/topic/changeVisibility',
             dataType: 'json',
-            success: function(res){
+            success: function (res) {
                 alert(res);
             },
-            error: function(res){
+            error: function (res) {
                 $('#message').text('Error!');
                 $('.dvLoading').hide();
             }
@@ -320,7 +311,5 @@
 </script>
 
 </body>
-
-
 
 </html>

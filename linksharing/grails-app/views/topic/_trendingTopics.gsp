@@ -17,7 +17,8 @@
                         </div>
 
                         <div class="col-sm-9">
-                            <a href="${createLink(controller: 'topic', action: 'show',id: trendingTopics.topicId)}" class="pull-left">${trendingTopics.topicName}</a>
+                            <a href="${createLink(controller: 'topic', action: 'show', id: trendingTopics.topicId)}"
+                               class="pull-left">${trendingTopics.topicName}</a>
                             <br>
 
                             <div class="row">
@@ -63,7 +64,9 @@
                                     <a href="#"><span type="img" class="fa fa-envelope pull-right fa-2x"
                                                       style="margin-left: 10px;color: #007efc;"></span></a>
 
-                                    <select class="pull-right">
+                                    <select class="pull-right" name="subscriptionSeriousness"
+                                            id="subscriptionSeriousness"
+                                            onchange="changeSeriousness(${trendingTopics.subscriptionId}, this.value)">
                                         <option class="placeholder" selected disabled
                                                 value="">${trendingTopics.subscriptionSeriousness}</option>
                                         <option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>
@@ -71,14 +74,18 @@
                                         <option value="${enumeration.Seriousness.CASUAL}">Casual</option>
                                     </select>
 
+
                                     <g:if test="${trendingTopics.ownerUsername == session.user.username || session.user?.admin}">
                                         <div>
-                                            <select class="pull-right">
+                                            <select class="pull-right" name="topicVisibility"
+                                                    id="topic_Visibility"
+                                                    onchange="changeVisibility(${trendingTopics.topicId}, this.value)">
                                                 <option class="placeholder" selected disabled
                                                         value="">${trendingTopics.topicVisibility}</option>
                                                 <option value="${enumeration.Visibility.PRIVATE}">Private</option>
                                                 <option value="${enumeration.Visibility.PUBLIC}">Public</option>
                                             </select>
+
                                         </div>
                                     </g:if>
                                 </g:if>

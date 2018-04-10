@@ -4,6 +4,7 @@
 
     <title></title>
     <meta name="layout" content="main">
+    <asset:javascript src="jquery-2.2.0.min.js"/>
 
 </head>
 
@@ -66,7 +67,47 @@
 
 </div>
 
+<script>
+    function changeVisibility(topicId,value) {
+        console.log("inside change")
+        console.log("id is : ", topicId)
+        console.log("value is : ", value)
+        $.ajax({
+            type: 'post',
+            data: {'id': topicId, 'visibility': value},
+            url: '/topic/changeVisibility',
+            dataType: 'json',
+            success: function(res){
+                alert(res);
+            },
+            error: function(res){
+                $('#message').text('Error!');
+                $('.dvLoading').hide();
+            }
+        });
+    }
+</script>
 
+<script>
+    function changeSeriousness(subscriptionId,value) {
+        console.log("inside change")
+        console.log("id is : ", subscriptionId)
+        console.log("value is : ", value)
+        $.ajax({
+            type: 'post',
+            data: {'id': subscriptionId, 'seriousness': value},
+            url: '/subscription/changeSeriousness',
+            dataType: 'json',
+            success: function(res){
+                alert(res);
+            },
+            error: function(res){
+                $('#message').text('Error!');
+                $('.dvLoading').hide();
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

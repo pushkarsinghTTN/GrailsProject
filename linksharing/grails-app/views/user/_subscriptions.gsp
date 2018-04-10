@@ -51,9 +51,10 @@
                                 <a href="#"><span type="img" class="fa fa-envelope pull-right fa-2x"
                                                   style="margin-left: 10px;color: #007efc;"></span></a>
 
-                                <g:form controller="subscription" action="update" method="post">
-                                    <select class="pull-right" name="updatedSeriousness">
-                                        <option class="placeholder" selected disabled value="">${subscribedTopics.subscriptionSeriousness}</option>
+                                    <select class="pull-right" name="updatedSeriousness" id ="updateSeriousness"
+                                            onchange="changeSeriousness(${subscribedTopics.subscriptionId}, this.value)">
+                                        <option class="placeholder" selected disabled
+                                                value="">${subscribedTopics.subscriptionSeriousness}</option>
                                         <option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>
                                         <option value="${enumeration.Seriousness.SERIOUS}">Serious</option>
                                         <option value="${enumeration.Seriousness.CASUAL}">Casual</option>
@@ -61,14 +62,14 @@
 
                                     <g:if test="${subscribedTopics.ownerUsername == session.user.username}">
                                         <div>
-                                            <select class="pull-right" name="updatedVisibility">
-                                                <option class="placeholder" selected disabled value="">${subscribedTopics.topicVisibility}</option>
+                                            <select class="pull-right" name="updatedVisibility" id="updateVisibility" onchange="changeVisibility(${subscribedTopics.topicId},this.value)">
+                                                <option class="placeholder" selected disabled
+                                                        value="">${subscribedTopics.topicVisibility}</option>
                                                 <option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>
                                                 <option value="${enumeration.Visibility.PUBLIC}">PUBLIC</option>
                                             </select>
                                         </div>
                                     </g:if>
-                                </g:form>
                             </div>
                         </div>
                     </div>
