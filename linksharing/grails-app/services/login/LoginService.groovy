@@ -6,21 +6,27 @@ import user.User
 @Transactional
 class LoginService {
 
-    def serviceMethod() {
-
-    }
-
-    User registerUser(Map userData) {
-        User user = new User(firstname: userData.firstname, lastname: userData.lastname,
-                email: userData.email, username: userData.username, password: userData.password,
-                confirmpassword: userData.confirmpassword, active: true, photo: userData.photo.bytes)
-        if (user.save(flush: true)) {
-            log.info("User created : $user")
-            return user
+    @Transactional
+    Map registerUser(Map userData) {
+        User checkuser = User.findByUsername(userData.username)
+        Map data = [:]
+        if (checkuser) {
+            data = [errors: ["A User With Same Username Already Exists"]]
+            return data
         } else {
-            log.error("Unable To Register User : $user")
-            user.errors.allErrors.each { println(it) }
-            return null
+            User user = new User(firstname: userData.firstname, lastname: userData.lastname,
+                    email: userData.email, username: userData.username, password: userData.password,
+                    confirmpassword: userData.confirmpassword, active: true, photo: userData.photo.bytes)
+            if (user.save(flush: true)) {
+                log.info("User created : $user")
+                data = [user: user]
+                return data
+            } else {
+                log.error("Unable To Register User : $user")
+                user.errors.allErrors.each { println(it) }
+                data = [errors: user.errors.allErrors]
+                return data
+            }
         }
     }
 

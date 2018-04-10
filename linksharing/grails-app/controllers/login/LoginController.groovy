@@ -39,14 +39,14 @@ class LoginController {
     }
 
     def register() {
-        //println("printing params : $params")
-        User user = loginService.registerUser(params)
-        if (user) {
+        Map data = loginService.registerUser(params)
+        if (data.errors) {
+            flash.error = "Unable to Register User. Reason: [${data.errors}]"
+            redirect(controller: 'login', action: 'index')
+        } else if (data.user) {
             flash.message = "SUCCESSFULLY REGISTERED"
-            session.user = user
+            session.username = data.user.username
             forward(controller: 'User', action: 'index')
-        } else {
-            flash.error = "UNABLE TO REGISTER USER"
         }
     }
 

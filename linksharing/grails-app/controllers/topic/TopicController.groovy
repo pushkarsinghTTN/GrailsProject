@@ -59,4 +59,15 @@ class TopicController {
         redirect(controller: 'user',action: 'index')
     }
 
+    def changeVisibility(){
+        println "TopicController.changeVisibility"
+        println "data ::" + params
+        if(topicService.changeVisibility(params)){
+            flash.message = "Updated"
+        }else{
+            flash.error = "Unable to Update"
+        }
+        redirect(controller: 'user', action: 'editProfile')
+    }
+
 }

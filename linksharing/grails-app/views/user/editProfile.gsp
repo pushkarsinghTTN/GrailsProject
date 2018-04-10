@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>${user.name} Profile</title>
     <meta name="layout" content="main">
+    <asset:javascript src="jquery-2.2.0.min.js"/>
 
 </head>
 
@@ -15,7 +16,7 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-3">
-                        <ls:userImage username="${user.username}" height="100" width="100"/>
+                            <ls:userImage username="${user.username}" height="100" width="100"/>
                         </div>
 
                         <div class="col-sm-9">
@@ -109,16 +110,17 @@
                                                 </span>
 
                                                 <g:form controller="subscription" action="update" method="post">
-                                                    <select class="pull-right" name="updatedSeriousness">
-                                                        <option class="placeholder" selected disabled
-                                                                value="">${enumeration.Seriousness.SERIOUS}</option>
-                                                        <option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>
-                                                        <option value="${enumeration.Seriousness.SERIOUS}">Serious</option>
-                                                        <option value="${enumeration.Seriousness.CASUAL}">Casual</option>
-                                                    </select>
+                                                %{--<select class="pull-right" name="updatedSeriousness" name="subscriptionSeriousness" id="">--}%
+                                                %{--<option class="placeholder" selected disabled--}%
+                                                %{--value="">${enumeration.Seriousness.SERIOUS}</option>--}%
+                                                %{--<option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>--}%
+                                                %{--<option value="${enumeration.Seriousness.SERIOUS}">Serious</option>--}%
+                                                %{--<option value="${enumeration.Seriousness.CASUAL}">Casual</option>--}%
+                                                %{--</select>--}%
 
                                                     <div>
-                                                        <select class="pull-right" name="updatedVisibility">
+                                                        <select class="pull-right" name="topicVisibility"
+                                                                id="topic_Visibility" onchange="changeVisibility(${topic.topicId},this.value)">
                                                             <option class="placeholder" selected disabled
                                                                     value="">${topic.topicVisibility}</option>
                                                             <option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>
@@ -172,8 +174,10 @@
                                             <div class="col-sm-3">
                                                 <h6 class="text-muted">@${post.ownerUsername}</h6>
                                             </div>
+
                                             <div class="col-sm-5">
-                                                <a href="${createLink(controller: 'topic', action: 'show', id: post.topicId)}" class="pull-right">${post.topicName}</a>
+                                                <a href="${createLink(controller: 'topic', action: 'show', id: post.topicId)}"
+                                                   class="pull-right">${post.topicName}</a>
                                             </div>
                                         </div>
 
@@ -293,5 +297,30 @@
 
 </div>
 
+
+<script>
+    function changeVisibility(topicId,value) {
+        console.log("inside change")
+        console.log("id is : ", topicId)
+        console.log("value is : ", value)
+        $.ajax({
+            type: 'post',
+            data: {'id': topicId, 'visibility': value},
+            url: '/topic/changeVisibility',
+            dataType: 'json',
+            success: function(res){
+                alert(res);
+            },
+            error: function(res){
+                $('#message').text('Error!');
+                $('.dvLoading').hide();
+            }
+        });
+    }
+</script>
+
 </body>
+
+
+
 </html>

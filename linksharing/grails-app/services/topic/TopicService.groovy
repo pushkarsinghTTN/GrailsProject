@@ -56,4 +56,17 @@ class TopicService {
             return false
         }
     }
+
+    def changeVisibility(Map topicData){
+        Topic topic = Topic.findById(topicData.id)
+        topic.visibility= topicData.visibility
+        if(topic.save(flush:true)){
+            log.info("Visibility Changed : $topic")
+            return true
+        }else{
+            log.error("Unable to Change Visibility : $topic")
+            topic.errors.allErrors.each {println it}
+            return false
+        }
+    }
 }

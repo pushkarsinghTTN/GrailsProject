@@ -13,7 +13,7 @@
                 <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-3">
-                            <ls:userImage username="${trendingTopics.ownerName}" height="100" width="100"/>
+                            <ls:userImage username="${trendingTopics.ownerUsername}" height="100" width="100"/>
                         </div>
 
                         <div class="col-sm-9">

@@ -8,12 +8,12 @@
             </div>
 
             <div class="modal-body">
-                <g:form class="form-horizontal" controller="invitation" action="index">
+                <g:form class="form-horizontal" controller="invitation" action="sendMail">
                     <div class="form-group">
                         <label class="control-label col-sm-2">Email</label>
 
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" name="inviteEmail">
+                            <input type="email" class="form-control" name="recieverEmail">
                         </div>
                     </div>
 

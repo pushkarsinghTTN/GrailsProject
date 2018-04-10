@@ -79,7 +79,7 @@
                         <ul class="dropdown-menu">
                             <li><g:link controller="user" action="editProfile">Profile</g:link></li>
                             <g:if test="${session.user.admin}">
-                            <li><g:link controller="user" action="showUserListToAdmin">Users</g:link></li>
+                                <li><g:link controller="user" action="showUserListToAdmin">Users</g:link></li>
                             %{--<li><g:link controller="user" action="showTopics">Topic</g:link></li>--}%
                             %{--<li><g:link controller="resource" action="showPosts">Post</g:link></li>--}%
                             </g:if>
@@ -94,16 +94,17 @@
     </div>
 </nav>
 
-<g:if test="${session.user == null}">
-    <g:if test="${flash.error}">
-        <g:message message="${flash.error}"></g:message>
+%{--<g:if test="${session.user == null}">--}%
+<g:if test="${flash.error}">
 
-    </g:if>
-    <g:if test="${flash.message}">
-        <g:message message="${flash.message}"></g:message>
+    <g:render template="/layouts/info"></g:render>
 
-    </g:if>
 </g:if>
+<g:if test="${flash.message}">
+    <g:render template="/layouts/info"></g:render>
+
+</g:if>
+%{--</g:if>--}%
 <g:layoutBody/>
 
 </body>
