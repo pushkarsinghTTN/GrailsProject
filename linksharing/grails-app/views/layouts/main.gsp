@@ -97,11 +97,11 @@
 %{--<g:if test="${session.user == null}">--}%
 <g:if test="${flash.error}">
 
-    <g:render template="/layouts/info"></g:render>
+    ${flash.error}
 
 </g:if>
 <g:if test="${flash.message}">
-    <g:render template="/layouts/info"></g:render>
+    ${flash.message}
 
 </g:if>
 %{--</g:if>--}%

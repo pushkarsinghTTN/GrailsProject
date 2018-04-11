@@ -10,7 +10,7 @@
                 <div class="form-group col-lg-10">
                     <label>Username</label>
                     <input class="form-control" type="text" name="loginusername"
-                           placeholder="Enter Your Username">
+                           placeholder="Enter Your Username" required>
                 </div>
 
                 <div class="col-lg-2"></div>
@@ -18,7 +18,7 @@
                 <div class="form-group col-lg-10">
                     <label>Password</label>
                     <input class="form-control" type="password" name="loginpassword"
-                           placeholder="Enter Your Password">
+                           placeholder="Enter Your Password" required>
 
                 </div>
 

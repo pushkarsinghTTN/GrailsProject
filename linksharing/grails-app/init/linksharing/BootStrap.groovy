@@ -21,7 +21,7 @@ class BootStrap {
 
         String fileUploadLocation = Holders.grailsApplication.config.file.uploadLocation
         println "fileUploadLocation ================= $fileUploadLocation"
-/*        //Admin-
+        //Admin-
 
         User admin = new User()
         admin.firstname = "Chirag"
@@ -326,7 +326,7 @@ class BootStrap {
 
         createResources()
         createReadingItems()
-        createResourceRatings()*/
+        createResourceRatings()
 
     }
     def destroy = {
@@ -354,8 +354,10 @@ class BootStrap {
                         temp.addToResources(documentResource)
                         temp.createdBy.addToResources(documentResource)
                         log.info("Saved Successfully : $documentResource")
-                    } else
+                    } else {
                         log.error("Error while saving : $documentResource")
+                        documentResource.errors.allErrors.each {println it}
+                    }
                 }
             }
             temp.save(flush: true)
