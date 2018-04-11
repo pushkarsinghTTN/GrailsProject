@@ -72,4 +72,35 @@ class ResourceController {
         redirect(controller: 'user', action: 'editProfile')
     }
 
+    def list() {
+        params.max = 10
+        [documentInstanceList: DocumentResource.list(params), documentInstanceTotal: DocumentResource.count()]
+    }
+
+    def downloadDocument(){
+        DocumentResource documentInstance = Resource.get(params.id)
+        if ( documentInstance == null) {
+            flash.message = "Document not found."
+        } else {
+            response.setContentType("APPLICATION/OCTET-STREAM")
+            response.setHeader("Content-Disposition", "Attachment;Filename=\"${documentInstance.fileName}\"")
+            println("about to fetch filepath >>>>>>>>>>>>>>>>>>>>>>>>>>>> ")
+            def file = new File(documentInstance.filepath)
+            def fileInputStream = new FileInputStream(file)
+            def outputStream = response.getOutputStream()
+            byte[] buffer = new byte[4096];
+            int len;
+            println("about to download >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            while ((len = fileInputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, len);
+            }
+            outputStream.flush()
+            outputStream.close()
+            fileInputStream.close()
+            flash.message = "Document Downloaded."
+        }
+        redirect (controller: 'user', action: 'index')
+
+    }
+
 }

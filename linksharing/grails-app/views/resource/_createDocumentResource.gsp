@@ -8,12 +8,12 @@
             </div>
 
             <div class="modal-body">
-                <g:form class="form-horizontal" controller="DocumentResource" action="save">
+                <g:uploadForm class="form-horizontal" controller="DocumentResource" action="save">
                     <div class="form-group">
                         <label class="control-label col-sm-2">Document</label>
 
                         <div class="col-sm-10">
-                            <input type="file" class="form-control" name="document">
+                            <input type="file" class="form-control" name="file">
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
 
                         </div>
                     </div>
-                </g:form>
+                </g:uploadForm>
             </div>
 
         </div>

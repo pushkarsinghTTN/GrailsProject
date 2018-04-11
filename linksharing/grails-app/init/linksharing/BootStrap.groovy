@@ -1,5 +1,6 @@
 package linksharing
 
+import grails.util.Holders
 import readingItem.ReadingItem
 import resource.DocumentResource
 import resource.LinkResource
@@ -14,8 +15,12 @@ import util.Utility
 import vo.ResourceVO
 
 class BootStrap {
+    def grailsApplication
 
     def init = { servletContext ->
+
+        String fileUploadLocation = Holders.grailsApplication.config.file.uploadLocation
+        println "fileUploadLocation ================= $fileUploadLocation"
 /*        //Admin-
 
         User admin = new User()

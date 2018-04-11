@@ -16,8 +16,6 @@ class InvitationController {
             text """Hey checkout this interesting topic I came across. 
 <a href = "http://localhost:8080/subscription/subscribeThroughEmail')}">Click Here</a>
 """
-
-//            html view: "/emails/hello", model: [param1: "value1", param2: "value2"]
         }
         render "done"
     }

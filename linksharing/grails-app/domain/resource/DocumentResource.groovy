@@ -6,23 +6,25 @@ import user.User
 
 class DocumentResource extends Resource {
     String filepath
-    String contentType
     String fileName
+//    String contentType
 
-    static transients = ['contentType', 'fileName']
+
+    static transients = ['fileName']
 
     static constraints = {
-        filepath(unique: true,blank:false)
-        contentType(matches: Constants.DOCUMENT_CONTENT_TYPE)
+        filepath(blank:false,nullable:false)
+        fileName(blank:false,nullable:false)
+        //contentType(matches: Constants.DOCUMENT_CONTENT_TYPE)
     }
 
     String toString() {
         "Document Resource filepath: ${filepath}"
     }
 
-    String getFileName() {
+    /*String getFileName() {
         filepath.substring(filepath.lastIndexOf('/'))
-    }
+    }*/
 
     def deleteResource() {
         String path = this.filepath

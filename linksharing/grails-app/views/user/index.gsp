@@ -109,5 +109,22 @@
     }
 </script>
 
+<script>
+    function deletecontact(id) {
+        var r = confirm("Are you sure to delete?");
+        if (r == true) {
+            $.ajax({
+                url: "/deleteContact",
+                type: "POST",
+                data: {id: id},
+                success: function (data) {
+                    alert(data);
+                }
+
+            });
+        }
+    }
+</script>
+
 </body>
 </html>

@@ -41,7 +41,8 @@
                                     </h6>
                                 </div>
                                 <g:if test="${subscribedTopics.ownerUsername == session.user.username}">
-                                    <a href="${createLink(controller: 'topic', action: 'delete', id: subscribedTopics.topicId)}"><span
+                                    <a href=""
+                                       onclick="return deleteSubscription(${subscribedTopics.subscriptionId})"><span
                                             type="img" class="glyphicon glyphicon-trash pull-right fa-2x"
                                             style="margin-left: 10px;color: #007efc;"></span></a>
                                     <a href="#"><span type="img" class="fa fa-file pull-right fa-2x"
@@ -51,25 +52,26 @@
                                 <a href="#"><span type="img" class="fa fa-envelope pull-right fa-2x"
                                                   style="margin-left: 10px;color: #007efc;"></span></a>
 
-                                    <select class="pull-right" name="updatedSeriousness" id ="updateSeriousness"
-                                            onchange="changeSeriousness(${subscribedTopics.subscriptionId}, this.value)">
-                                        <option class="placeholder" selected disabled
-                                                value="">${subscribedTopics.subscriptionSeriousness}</option>
-                                        <option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>
-                                        <option value="${enumeration.Seriousness.SERIOUS}">Serious</option>
-                                        <option value="${enumeration.Seriousness.CASUAL}">Casual</option>
-                                    </select>
+                                <select class="pull-right" name="updatedSeriousness" id="updateSeriousness"
+                                        onchange="changeSeriousness(${subscribedTopics.subscriptionId}, this.value)">
+                                    <option class="placeholder" selected disabled
+                                            value="">${subscribedTopics.subscriptionSeriousness}</option>
+                                    <option value="${enumeration.Seriousness.VERYSERIOUS}">Very Serious</option>
+                                    <option value="${enumeration.Seriousness.SERIOUS}">Serious</option>
+                                    <option value="${enumeration.Seriousness.CASUAL}">Casual</option>
+                                </select>
 
-                                    <g:if test="${subscribedTopics.ownerUsername == session.user.username}">
-                                        <div>
-                                            <select class="pull-right" name="updatedVisibility" id="updateVisibility" onchange="changeVisibility(${subscribedTopics.topicId},this.value)">
-                                                <option class="placeholder" selected disabled
-                                                        value="">${subscribedTopics.topicVisibility}</option>
-                                                <option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>
-                                                <option value="${enumeration.Visibility.PUBLIC}">PUBLIC</option>
-                                            </select>
-                                        </div>
-                                    </g:if>
+                                <g:if test="${subscribedTopics.ownerUsername == session.user.username}">
+                                    <div>
+                                        <select class="pull-right" name="updatedVisibility" id="updateVisibility"
+                                                onchange="changeVisibility(${subscribedTopics.topicId}, this.value)">
+                                            <option class="placeholder" selected disabled
+                                                    value="">${subscribedTopics.topicVisibility}</option>
+                                            <option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>
+                                            <option value="${enumeration.Visibility.PUBLIC}">PUBLIC</option>
+                                        </select>
+                                    </div>
+                                </g:if>
                             </div>
                         </div>
                     </div>
@@ -82,3 +84,18 @@
         </div>
     </div>
 </div>
+<script>
+    function deleteSubscription(subscriptionId) {
+        var r = confirm("Are you sure to delete?");
+        if (r == true) {
+            $.ajax({
+                url: "/subscription/delete",
+                type: "POST",
+                data: {subscriptionId: subscriptionId},
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
+    }
+</script>

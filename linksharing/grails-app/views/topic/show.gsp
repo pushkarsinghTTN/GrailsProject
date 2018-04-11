@@ -178,9 +178,8 @@
                                             <i class="fa fa-facebook-square fa-lg" aria-hidden="true"></i>
                                             <i class="fa fa-google-plus fa-lg" aria-hidden="true"></i>
                                             <i class="fa fa-twitter-square fa-lg" aria-hidden="true"></i>
-                                            <span class="pull-right" style="margin-right: 0px;color: #007efc"><a
-                                                    href="#"
-                                                    style="color: #007efc;font-size: 75%">Download</a>
+                                            <span class="pull-right" style="margin-right: 0px;color: #007efc">
+                                                <a href="${createLink(controller:'resource',action:'downloadDocument',id:resource.resourceId)}">Download</a>
                                                 <a href="${createLink(controller: 'resource', action: 'showPost', id: resource.resourceId)}">View Post</a>
                                             </span>
                                         </div>

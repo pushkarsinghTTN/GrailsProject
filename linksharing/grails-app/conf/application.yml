@@ -8,6 +8,12 @@ grails:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+
+    controllers:
+            upload:
+                maxFileSize: 2000000
+                maxRequestSize: 2000000
+
 info:
     app:
         name: '@info.app.name@'
@@ -104,10 +110,13 @@ environments:
                 password: ttn
                 dbCreate: update
                 url: jdbc:mysql://localhost:3306/linksharing
+
+
     test:
         dataSource:
             dbCreate: update
             url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+
     production:
         dataSource:
             dbCreate: none
@@ -130,3 +139,27 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+
+
+grails:
+    mail:
+        host: "smtp.gmail.com"
+        port: 587
+        protocol: "smtp"
+        username: "pushkarsingh9914103064@gmail.com"
+        password: "pushkar1234"
+        props:
+          "mail.smtp.auth": true
+          "mail.smtp.starttls.enable": true
+          "mail.smtp.quitwait": false
+
+file:
+    uploadLocation: "/home/pushkar/GrailsProject/linksharing/grails-app/assets"
+
+#environments:
+#    development:
+#        uploadFolder: "/home/pushkar/GrailsProject/linksharing/grails-app/assets"
+#    test:
+#        uploadFolder: "/home/pushkar/GrailsProject/linksharing/grails-app/assets"
+#    production:
+#        uploadFolder: "/home/pushkar/GrailsProject/linksharing/grails-app/assets"
