@@ -2,38 +2,49 @@ package resource
 
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
+import grails.test.mixin.TestFor
+import spock.lang.Specification
+import spock.lang.Unroll
+import topic.Topic
+import user.User
 
-class LinkResourceSpec extends Specification implements DomainUnitTest<LinkResource> {
+@TestFor(LinkResource)
+class LinkResourceSpec extends Specification {
 
-    def setup() {
-    }
-
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == true
-    }
-
-    void "check unique link"(){
-        String url="abc.com"
+    @Unroll
+    void "Test All LinkResource Validations"() {
         setup:
-        LinkResource linkResource = new LinkResource()
-        linkResource.url=url
-
+        LinkResource linkResource = new LinkResource(url: url, createdBy: createdBy, description: description, topic: topic)
         when:
-        linkResource.save()
+        Boolean result = linkResource.validate()
 
         then:
-        Resource.findAll(url).size()==1
+        result == isValid
 
-        when:
-        LinkResource newlinkResource = new LinkResource()
-        newlinkResource.url=url
-        newlinkResource.save()
+        where:
+        sno | url                                        | createdBy  | description   | topic       | isValid
+        0   | "http://www.example.com/space%20here.html" | new User() | "description" | new Topic() | true
+        1   | ""                                         | new User() | "description" | new Topic() | false
+        2   | null                                       | new User() | "description" | new Topic() | false
+        3   | "http://www.example.com/space%20here.html" | null       | "description" | new Topic() | false
+        4   | "http://www.example.com/space%20here.html" | new User() | ""            | new Topic() | false
+        5   | "http://www.example.com/space%20here.html" | new User() | null          | new Topic() | false
+        6   | "http://www.example.com/space%20here.html" | new User() | "description" | null        | false
 
-        then:
-        Resource.findAll(url).size()==1
     }
+
+    @Unroll
+    def "testing toString() of Link Resource"() {
+        given:
+        LinkResource linkResource = new LinkResource(url: "http://www.example.com/space%20here.html", createdBy: new User(), description: "Dummy", topic: new Topic())
+
+        when:
+        String result = "${linkResource}"
+
+        then:
+        result == "Link Resource url: http://www.example.com/space%20here.html"
+
+
+    }
+
 }

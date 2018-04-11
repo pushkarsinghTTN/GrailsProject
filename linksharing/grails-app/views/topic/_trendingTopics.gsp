@@ -3,7 +3,6 @@
     <div class="panel-heading">
         <h3 class="panel-title">
             Trending topics
-            %{--<a href="#" class="pull-right">View All</a>--}%
         </h3>
     </div>
 
@@ -54,7 +53,8 @@
                                 </div>
                                 <g:if test="${session.user}">
                                     <g:if test="${trendingTopics.ownerUsername == session.user.username || session.user.admin}">
-                                        <a href="${createLink(controller: 'topic', action: 'delete', id: trendingTopics.topicId)}">
+                                        <a href=""
+                                           onclick="return deleteSubscription(${trendingTopics.subscriptionId})">
                                             <span type="img" class="glyphicon glyphicon-trash pull-right fa-2x"
                                                   style="margin-left: 10px;color: #007efc;"></span></a>
                                         <a href="#"><span type="img" class="fa fa-file pull-right fa-2x"

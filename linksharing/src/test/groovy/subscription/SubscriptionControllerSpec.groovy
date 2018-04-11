@@ -3,16 +3,32 @@ package subscription
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class SubscriptionControllerSpec extends Specification implements ControllerUnitTest<SubscriptionController> {
+import grails.test.mixin.Mock
+import grails.test.mixin.TestFor
+import spock.lang.Specification
+import spock.lang.Unroll
+import topic.Topic
+import user.User
 
-    def setup() {
-    }
+@TestFor(SubscriptionController)
+@Mock(Subscription)
+class SubscriptionControllerSpec extends Specification {
 
-    def cleanup() {
-    }
+    @Unroll
+    void "test creator can not delete his subscription"() {
 
-    void "test something"() {
-        expect:"fix me"
-            true == true
+        given:
+        Topic topic = new Topic(createdBy: new User())
+        session.user = new User(id: 1)
+        List<Subscription> subscriptions = [new Subscription(topic: topic).save(validate: false)]
+        Subscription.metaClass.delete = { Map map ->
+            return "true"
+        }
+
+        when:
+        controller.delete(1)
+
+        then:
+        flash.error == "Creator can not delete subscription"
     }
 }

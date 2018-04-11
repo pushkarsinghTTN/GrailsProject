@@ -38,7 +38,7 @@ class TopicController {
     }
 
     def delete() {
-        Topic proxytopic = Topic.load(params.id)
+        Topic proxytopic = Topic.load(params.topicId)
         if (!proxytopic) {
             flash.error = "NO SUCH TOPIC IN OUR DATABASE"
             render("NO SUCH TOPIC IN OUR DATABASE")

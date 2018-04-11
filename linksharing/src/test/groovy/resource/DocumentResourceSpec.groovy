@@ -3,37 +3,62 @@ package resource
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class DocumentResourceSpec extends Specification implements DomainUnitTest<DocumentResource> {
+import grails.test.mixin.TestFor
+import spock.lang.Specification
+import spock.lang.Unroll
+import topic.Topic
+import user.User
 
-    def setup() {
-    }
+@TestFor(DocumentResource)
+class DocumentResourceSpec extends Specification {
 
-    def cleanup() {
-    }
-
-    void "test something"() {
-        expect:"fix me"
-            true == true
-    }
-
-    void "check unique source"(){
-        String filepath="/abc/def"
+    @Unroll
+    void "testing constraints of DocumentResource"() {
         setup:
-        DocumentResource documentResource = new DocumentResource()
-        documentResource.filepath=filepath
-
+        DocumentResource documentResource = new DocumentResource(filePath: filePath, createdBy: createdBy, description: description, topic: topic)
         when:
-        documentResource.save()
+        Boolean result = documentResource.validate()
 
         then:
-        Resource.findAll(filepath).size()==1
+        result == isValid
 
-        when:
-        DocumentResource newdocumentResource = new DocumentResource()
-        newdocumentResource.filepath=filepath
-        newdocumentResource.save()
+        where:
+        sno | filePath                                   | createdBy  | description   | topic       | isValid
+        0   | "~/Desktop/user.txt"                       | new User() | "description" | new Topic() | true
+        0   | "http://www.example.com/space%20here.html" | new User() | "description" | new Topic() | true
+        1   | ""                                         | new User() | "description" | new Topic() | false
+        2   | null                                       | new User() | "description" | new Topic() | false
+        3   | "http://www.example.com/space%20here.html" | null       | "description" | new Topic() | false
+        4   | "http://www.example.com/space%20here.html" | new User() | ""            | new Topic() | false
+        5   | "http://www.example.com/space%20here.html" | new User() | null          | new Topic() | false
+        6   | "http://www.example.com/space%20here.html" | new User() | "description" | null        | false
 
-        then:
-        Resource.findAll(filepath).size()==1
     }
+
+    @Unroll
+    def "testing toString() of DocumentResource"() {
+        given:
+        DocumentResource documentResource = new DocumentResource(filePath: "~/home/dummy.txt", createdBy: new User(), description: "Dummy Description", topic: new Topic())
+
+        when:
+        String result = "${documentResource}"
+
+        then:
+        result == "Document Resource filepath: ~/home/dummy.txt"
+
+
+    }
+
+    @Unroll
+    def "testing getFileName"() {
+        given:
+        DocumentResource documentResource = new DocumentResource(filePath: "/a/b/c/file.pdf", contentType: '/contentType/pdf')
+
+        when:
+        String filePath = documentResource.getFileName()
+
+        then:
+        filePath == "/file.pdf"
+    }
+
 }

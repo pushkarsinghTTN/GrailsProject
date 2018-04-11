@@ -1,6 +1,9 @@
 package resource
 
+import enumeration.Visibility
 import readingItem.ReadingItem
+import subscription.Subscription
+import topic.Topic
 import user.User
 
 class LinksharingTagLib {
@@ -8,37 +11,12 @@ class LinksharingTagLib {
     static namespace = "ls"
     static defaultEncodeAs = [taglib: 'text']
 
-    def read = {
-        attrs, body ->
-            if (!session.user) {
-                def resourceId = attrs?.id
-                println resourceId
-                Integer userId = session.user.id
-                println(userId)
-                User user = User.get(userId)
-                println(user)
-                Resource resource = Resource.get(resourceId)
-                println(resource)
-                List<ReadingItem> readingItems = ReadingItem.findAllByResource(resource)
-                readingItems.each {
-                    if (it.user == user) {
-                        if (it.isRead) {
-                            out << "<a href='/readingItem/changeIsRead/${it.id}/${it.isRead}'style=\"color: #007efc;font-size: small\">Unread</a>"
-                        } else
-                            out << "<a href='/readingItem/changeIsRead/${it.id}/${it.isRead}'style=\"color: #007efc;font-size: small\">Mark Read</a>"
-
-                    }
-                }
-            }
-    }
-
     def userImage = { attrs, body ->
         out << "<img src='${createLink(controller: 'user', action: 'fetchUserImage', params: [username: attrs.username])}' " +
                 " height='${attrs.height}' width='${attrs.width}'>"
     }
 
-    /*
-        def markRead = { attrs, body ->
+    def markRead = { attrs, body ->
         if (session.user && attrs.resource) {
             ReadingItem readingItem = ReadingItem.findByUserAndResource(session.user, attrs.resource)
             if (readingItem) {
@@ -140,11 +118,6 @@ class LinksharingTagLib {
 
     }
 
-    def userImage = { attrs, body ->
-        out << "<img src='${createLink(controller: 'user', action: 'image', params: [userId: attrs.userId])}' " +
-                " height='${attrs.height}' width='${attrs.width}'>"
-    }
-
 
     def canUpdateTopic = { attrs, body ->
         User user = User.get(attrs.userId)
@@ -177,8 +150,5 @@ class LinksharingTagLib {
         User user = session.user
         out << g.select(name: "topic", from: user.getSubscribedTopics(), optionKey: "id", class: "form-control")
     }
-
-}
-     */
 
 }

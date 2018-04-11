@@ -105,9 +105,11 @@
                                                 <span type="img" class="fa fa-envelope pull-right fa-2x"
                                                       style="margin-left: 10px;">
                                                 </span>
+                                                <a href=""
+                                                   onclick="return deleteTopic(${topic.topicId})">
                                                 <span type="img" class="glyphicon glyphicon-trash pull-right fa-2x"
                                                       style="margin-left: 10px;">
-                                                </span>
+                                                </span></a>
 
                                                 <div>
                                                     <select class="pull-right" name="topicVisibility"
@@ -307,6 +309,22 @@
                 $('.dvLoading').hide();
             }
         });
+    }
+</script>
+
+<script>
+    function deleteTopic(topicId) {
+        var r = confirm("Are you sure to delete?");
+        if (r == true) {
+            $.ajax({
+                url: "/topic/delete",
+                type: "POST",
+                data: {topicId: topicId},
+                success: function (data) {
+                    alert(data);
+                }
+            });
+        }
     }
 </script>
 
