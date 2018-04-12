@@ -21,7 +21,7 @@ class BootStrap {
 
         String fileUploadLocation = Holders.grailsApplication.config.file.uploadLocation
         println "fileUploadLocation ================= $fileUploadLocation"
-        //Admin-
+/*        //Admin-
 
         User admin = new User()
         admin.firstname = "Chirag"
@@ -326,7 +326,7 @@ class BootStrap {
 
         createResources()
         createReadingItems()
-        createResourceRatings()
+        createResourceRatings()*/
 
     }
     def destroy = {

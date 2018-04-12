@@ -103,4 +103,12 @@ class ResourceController {
 
     }
 
+    def showLink(){
+        LinkResource linkResource = Resource.get(params.id)
+        if(linkResource){
+            redirect(url: "${linkResource.url}")
+            //render("Description - ${linkResource.description}")
+        }
+    }
+
 }

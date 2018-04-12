@@ -72,11 +72,19 @@ class User {
             eq('user', this)
         }
         List<InboxVO> unReadItemsList = []
+        Boolean isLink
         unReadItems.each{
+            Resource resource = Resource.findById(it.resource.id)
+            if(resource.class== resource.LinkResource)
+                isLink= true
+            else
+                isLink= false
+
             unReadItemsList.add(new InboxVO(ownerName: it.resource.createdBy.getName(),
                     ownerUsername: it.resource.createdBy.username,topicName: it.resource.topic.name,
                     topicId: it.resource.topic.id,resourceDescription: it.resource.description,
-                    resourceId: it.resource.id, readingItemId: it.id))
+                    resourceId: it.resource.id, readingItemId: it.id, isLink: isLink))
+
         }
         return unReadItemsList
     }
