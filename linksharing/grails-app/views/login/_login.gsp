@@ -25,7 +25,7 @@
                 <div class="col-lg-12"></div>
 
                 <div class="form-group col-lg-5">
-                    <p><g:link action="forgotPassword">Forgot Password</g:link></p>
+                    <a href="${createLink(controller: 'login', action: 'showforgotPasswordPage')}">Forgot Password</a>
                 </div>
 
                 <div class="form-group col-lg-10">

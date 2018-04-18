@@ -54,7 +54,7 @@ class ResourceController {
     }
 
     def storeRating() {
-        Map map = [score: params.star,ratedBy: session.user, resourceId: params.id]
+        Map map = [score: new Integer(params.star),ratedBy: session.user, resourceId: params.id]
         if (resourceService.saveRating(map)) {
             flash.message = "Saved Succesfully"
         } else {

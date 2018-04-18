@@ -137,4 +137,14 @@ class User {
         }
     }
 
+    List<Resource> findUnreadResources(){
+        ReadingItem unreadItem = ReadingItem.findAllByUserAndIsRead(this,false)
+
+        List<Resource> resourceList = []
+        unreadItem.each {
+            resourceList.add(it.resource)
+        }
+        return resourceList
+    }
+
 }
